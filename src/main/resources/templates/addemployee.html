@@ -16,11 +16,11 @@
         </div>
         <div class="form-group">
             Department name:
-            <select th:field="*{department}" multiple class="form-control">
-                <option th:each="eachDepartment:${departments}" th:value="${department}">[[${eachDepartment.name}]]</option>
+            <select th:field="*{department.name}" multiple class="form-control">
+                <option th:each="eachDepartment:${departments}" th:value="${eachDepartment.name}">[[${eachDepartment.name}]]</option>
             </select>
         </div>
-        <input type="submit" value="Add an emplyee" class="btn btn-primary"/>
+        <input type="submit" value="Add an employee" class="btn btn-primary"/>
 
     </form>
 

@@ -3,11 +3,11 @@ package com.example.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.RequestWrapper;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -72,38 +72,16 @@ public class HomeController {
     }
 
     @GetMapping("/addemployee")
-    public String addEmployee(Model model){
-
-        Department department = new Department();
-        department.setName("Accounting");
-
-        //creating a new employee
+    public String addEmployee(HttpServletRequest request, Model model){
         Employee employee = new Employee();
-        employee.setName("Lee");
-        employee.setJobTitle("Accountant");
-        Set<Employee> employees = new HashSet<>();
-        employees.add(employee);
 
-        employee.setName("Hanna");
-        employee.setJobTitle("Data Clerk");
-        employee.setDepartment(department);
-        employees.add(employee);
+        if(request.getParameter("departementid")!=null){
+            long departementid = new Long(request.getParameter("employeeid"));
+            employee.setDepartment(departmentRepository.findById(departementid).get());
+        }
 
-        //setting th eemployees to the department
-        department.setEmployees(employees);
 
-        departmentRepository.save(department);
-
-        Department department1 = new Department();
-        department1.setName("IT");
-        Employee employee1 = new Employee();
-        employee1.setName("John");
-        employee1.setJobTitle("Analyst");
-        employee1.setDepartment(department1);
-        employees  = new HashSet<>();
-        employees.add(employee1);
-        department1.setEmployees(employees);
-        departmentRepository.save(department1);
+//        employeeRepository.findById(employeeId).get();
 
         model.addAttribute("employee", employee);
         model.addAttribute("departments", departmentRepository.findAll());
@@ -115,6 +93,20 @@ public class HomeController {
         Set<Employee> employees = new HashSet<>();
         employeeRepository.save(employee);
         return "redirect:/";
+     }
+     @RequestMapping("/json")
+     public @ResponseBody String admin(){
+        return "This is an admin page, where the json will be shown";
+     }
+
+     @RequestMapping("/api/employees")
+    public @ResponseBody String apiuser(){
+        return "This is an apiuser employee page";
+     }
+
+     @RequestMapping("/api/departments")
+    public @ResponseBody String apiuserDep(){
+        return "This is an api user department page";
      }
 }
 

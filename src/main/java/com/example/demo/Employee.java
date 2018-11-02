@@ -10,7 +10,7 @@ public class Employee {
     private String name;
     private String jobTitle;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     private Department department;
 

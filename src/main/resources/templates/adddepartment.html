@@ -9,9 +9,9 @@
 <body>
 <div class="Container">
     <h2>Add department</h2>
-    <form th:action="@{/adddepartemnt}" th:object="${department}" method="post">
+    <form th:action="@{/adddepartment}" th:object="${department}" method="post">
         Department Name: <input type="text" th:field="*{name}" placeholder="Department name" />
-        <button type="submit">Add a departemnt</button>
+        <button type="submit">Add a department</button>
     </form>
 </div>
 
